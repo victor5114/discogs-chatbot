@@ -1,0 +1,10 @@
+{
+    "terminal.integrated.env.osx": {
+        "AWS_PROFILE": "victor5114-automation"
+    },
+    "python.venvFolders": [
+        "~/miniconda/envs/"
+    ],
+    "python.formatting.provider": "black",
+    "python.pythonPath": "/Users/pongnianvictor/miniconda2/envs/discogs-wantlist/bin/python"
+}

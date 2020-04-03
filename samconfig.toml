@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "discogs-chatbot"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1898s98r8g2g1"
+s3_prefix = "discogs-chatbot"
+region = "eu-west-3"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+
