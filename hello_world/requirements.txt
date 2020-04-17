@@ -1,2 +1,3 @@
 requests
-slack-signature-verifier
+discogs_client
+cryptography

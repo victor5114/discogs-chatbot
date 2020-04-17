@@ -15,7 +15,18 @@ Parameters:
     Type: String
     Description: Slack Signing secret
     Default: xxx
-
+  DiscogsConsumerKey:
+    Type: String
+    Description: Discogs Application Consumer Key
+    Default: xxx
+  DiscogsSecretKey:
+    Type: String
+    Description: Discogs Application Secret Key
+    Default: xxx
+  Debug:
+    Type: Bool
+    Description: Debug mode
+    Default: False
 Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -26,6 +37,9 @@ Resources:
       Environment:
         Variables:
           SLACK_SIGNING_SECRET: !Ref SlackSigningSecret
+          DISCOGS_CONSUMER_KEY: !Ref DiscogsConsumerKey
+          DISCOGS_SECRET_KEY: !Ref DiscogsSecretKey
+          DEBUG: !Ref Debug
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api

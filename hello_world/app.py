@@ -1,15 +1,51 @@
 import json
 import os
-from slack_signature_verifier import slack_signature_verifier as ssv
+import time
+import discogs_client
+import hmac
+import ast
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
 
-def respond(err, res=None):
+DEBUG = json.loads(os.environ.get('DEBUG', 'false').lower())
+
+def respond(err, res=None, err_code=400):
     return {
-        'statusCode': '400' if err else '200',
-        'body': err.message if err else json.dumps(res),
+        'statusCode': err_code if err else '200',
+        'body': json.dumps(err) if err else json.dumps(res),
         'headers': {
             'Content-Type': 'application/json',
         },
     }
+
+def verify_slack_request(event):
+
+    slack_signing_secret = os.environ["SLACK_SIGNING_SECRET"]
+    request_body = event['body']
+    timestamp = event['headers']['X-Slack-Request-Timestamp']
+
+    if abs(time.time() - int(timestamp)) > 60 * 5:
+        # The request timestamp is more than five minutes from local time.
+        # It could be a replay attack, so let's ignore it.
+        print('The request timestamp is more than five minutes from local time.')
+        return False
+
+    sig_basestring = 'v0:' + timestamp + ':' + request_body
+
+    # Prepare bytes encoding to feed cryptography function
+    secret_bytes_encoded = bytes(slack_signing_secret, 'utf-8')
+    sig_basestring_bytes_encoded = bytes(sig_basestring, 'utf-8')
+
+    digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
+    digest.update(secret_bytes_encoded)
+    digest.update(sig_basestring_bytes_encoded)
+
+    my_signature_bytes_encoded = 'v0=' + digest.finalize().hex()
+
+    slack_signature = event['headers']['X-Slack-Signature']
+
+    return hmac.compare_digest(my_signature_bytes_encoded, slack_signature)
+
 
 def lambda_handler(event, context):
     """Sample pure Lambda function
@@ -33,39 +69,18 @@ def lambda_handler(event, context):
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
 
-    print('event')
-    print(event)
+    is_request_verified = verify_slack_request(event)
 
-    print('context')
-    print(context)
+    if not is_request_verified and not DEBUG:
+        return respond({
+                "response_type": 'in_channel',
+                "text": 'Signature verification has failed'
+            }, None, 403)
 
-    # What is that ?
-    slack_request = {
-        "body": {
-            "token": "cwOw4fvUQavf65dEApYGVLhx",
-            "team_id": "T011B56JANA",
-            "team_domain": "victor5114-automation",
-            "channel_id": "C010ZQC8EM9",
-            "channel_name": "discogs-wantlist",
-            "user_id": "U011B56JAT0",
-            "user_name": "victor.pongnian",
-            "command": "/discogs-wantlist",
-            "text": "test+command",
-            "response_url": "https://hooks.slack.com/commands/T011B56JANA/1036541593571/m0c3ZNy0yKTXf6lwtG4J2tBA",
-            "trigger_id": "1036541593651.1045176622758.e97557ee3ed36726442c56815ccecabc"
-        },
-        "headers": {
-            "X-Slack-Signature": "v0=003f31b41baecfe40f196125d018c61889de9b8913f8212750c7193936434b36",
-            "X-Slack-Request-Timestamp": "1585917821"
-        }
-    }
-
-    is_valid_request = ssv.verify_slack_signature(slack_request, os.environ["SLACK_SIGNING_SECRET"])
-
-    print('Signature Results')
-    print(is_valid_request)
-
+    
     response_msg = 'Hello Slack support team'
+
+    d = discogs_client.Client('ExampleApplication/0.1')
     
     return respond(None, {
             "response_type": 'in_channel',

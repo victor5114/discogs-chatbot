@@ -1,0 +1,121 @@
+{
+    "resource": "/hello",
+    "path": "/hello",
+    "httpMethod": "POST",
+    "headers": {
+        "Accept": "application/json,*/*",
+        "Accept-Encoding": "gzip,deflate",
+        "CloudFront-Forwarded-Proto": "https",
+        "CloudFront-Is-Desktop-Viewer": "true",
+        "CloudFront-Is-Mobile-Viewer": "false",
+        "CloudFront-Is-SmartTV-Viewer": "false",
+        "CloudFront-Is-Tablet-Viewer": "false",
+        "CloudFront-Viewer-Country": "US",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Host": "ens236op18.execute-api.eu-west-3.amazonaws.com",
+        "User-Agent": "Slackbot 1.0 (+https://api.slack.com/robots)",
+        "Via": "1.1 14d757a67b913f1bc93427e69819362d.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Id": "Hdcq_ja7YOn4EgGGSEj7b2835NZGYvI0LSCwfq3jLVVrJUrKURUPTA==",
+        "X-Amzn-Trace-Id": "Root=1-5e875471-002833cc3d5e8dc0e8be0ca0",
+        "X-Forwarded-For": "3.83.164.70, 70.132.33.80",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https",
+        "X-Slack-Request-Timestamp": "1585927280",
+        "X-Slack-Signature": "v0=381fea4ea73166b8ff9d16896803265dbf13034f9c0ac68c7bbb90066a8f4955"
+    },
+    "multiValueHeaders": {
+        "Accept": [
+            "application/json,*/*"
+        ],
+        "Accept-Encoding": [
+            "gzip,deflate"
+        ],
+        "CloudFront-Forwarded-Proto": [
+            "https"
+        ],
+        "CloudFront-Is-Desktop-Viewer": [
+            "true"
+        ],
+        "CloudFront-Is-Mobile-Viewer": [
+            "false"
+        ],
+        "CloudFront-Is-SmartTV-Viewer": [
+            "false"
+        ],
+        "CloudFront-Is-Tablet-Viewer": [
+            "false"
+        ],
+        "CloudFront-Viewer-Country": [
+            "US"
+        ],
+        "Content-Type": [
+            "application/x-www-form-urlencoded"
+        ],
+        "Host": [
+            "ens236op18.execute-api.eu-west-3.amazonaws.com"
+        ],
+        "User-Agent": [
+            "Slackbot 1.0 (+https://api.slack.com/robots)"
+        ],
+        "Via": [
+            "1.1 14d757a67b913f1bc93427e69819362d.cloudfront.net (CloudFront)"
+        ],
+        "X-Amz-Cf-Id": [
+            "Hdcq_ja7YOn4EgGGSEj7b2835NZGYvI0LSCwfq3jLVVrJUrKURUPTA=="
+        ],
+        "X-Amzn-Trace-Id": [
+            "Root=1-5e875471-002833cc3d5e8dc0e8be0ca0"
+        ],
+        "X-Forwarded-For": [
+            "3.83.164.70, 70.132.33.80"
+        ],
+        "X-Forwarded-Port": [
+            "443"
+        ],
+        "X-Forwarded-Proto": [
+            "https"
+        ],
+        "X-Slack-Request-Timestamp": [
+            "1585927280"
+        ],
+        "X-Slack-Signature": [
+            "v0=381fea4ea73166b8ff9d16896803265dbf13034f9c0ac68c7bbb90066a8f4955"
+        ]
+    },
+    "queryStringParameters": null,
+    "multiValueQueryStringParameters": null,
+    "pathParameters": null,
+    "stageVariables": null,
+    "requestContext": {
+        "resourceId": "12vv0b",
+        "resourcePath": "/hello",
+        "httpMethod": "POST",
+        "extendedRequestId": "KaohsGY3CGYFpMw=",
+        "requestTime": "03/Apr/2020:15:21:21 +0000",
+        "path": "/Prod/hello",
+        "accountId": "618464369307",
+        "protocol": "HTTP/1.1",
+        "stage": "Prod",
+        "domainPrefix": "ens236op18",
+        "requestTimeEpoch": 1585927281108,
+        "requestId": "cd051157-7086-4426-8d97-20d527e7e18a",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "sourceIp": "3.83.164.70",
+            "principalOrgId": null,
+            "accessKey": null,
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "userAgent": "Slackbot 1.0 (+https://api.slack.com/robots)",
+            "user": null
+        },
+        "domainName": "ens236op18.execute-api.eu-west-3.amazonaws.com",
+        "apiId": "ens236op18"
+    },
+    "body": "token=cwOw4fvUQavf65dEApYGVLhx&team_id=T011B56JANA&team_domain=victor5114-automation&channel_id=C010ZQC8EM9&channel_name=discogs-wantlist&user_id=U011B56JAT0&user_name=victor.pongnian&command=%2Fdiscogs-wantlist&text=hello&response_url=https%3A%2F%2Fhooks.slack.com%2Fcommands%2FT011B56JANA%2F1040760212257%2FMAfg8mFXRGfAPBreruw8HJJb&trigger_id=1040760212673.1045176622758.3be30fc43a77a59b43eefa660d2d2b0c",
+    "isBase64Encoded": false
+}
