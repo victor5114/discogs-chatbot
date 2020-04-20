@@ -3,9 +3,8 @@ import os
 import time
 import discogs_client
 import hmac
+import hashlib
 import ast
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import hashes
 
 DEBUG = json.loads(os.environ.get('DEBUG', 'false').lower())
 
@@ -31,19 +30,13 @@ def verify_slack_request(event):
         return False
 
     sig_basestring = 'v0:' + timestamp + ':' + request_body
-
     # Prepare bytes encoding to feed cryptography function
     secret_bytes_encoded = bytes(slack_signing_secret, 'utf-8')
     sig_basestring_bytes_encoded = bytes(sig_basestring, 'utf-8')
 
-    digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
-    digest.update(secret_bytes_encoded)
-    digest.update(sig_basestring_bytes_encoded)
-
-    my_signature_bytes_encoded = 'v0=' + digest.finalize().hex()
-
+    my_signature_bytes_encoded = 'v0=' + hmac.new(secret_bytes_encoded, msg = sig_basestring_bytes_encoded, digestmod = hashlib.sha256).hexdigest()
+    
     slack_signature = event['headers']['X-Slack-Signature']
-
     return hmac.compare_digest(my_signature_bytes_encoded, slack_signature)
 
 
@@ -68,7 +61,6 @@ def lambda_handler(event, context):
 
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
-
     is_request_verified = verify_slack_request(event)
 
     if not is_request_verified and not DEBUG:
@@ -77,11 +69,9 @@ def lambda_handler(event, context):
                 "text": 'Signature verification has failed'
             }, None, 403)
 
-    
     response_msg = 'Hello Slack support team'
-
     d = discogs_client.Client('ExampleApplication/0.1')
-    
+
     return respond(None, {
             "response_type": 'in_channel',
             "text": response_msg,
