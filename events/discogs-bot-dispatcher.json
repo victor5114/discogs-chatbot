@@ -1,6 +1,6 @@
 {
-    "resource": "/hello",
-    "path": "/hello",
+    "resource": "/dispatch",
+    "path": "/dispatch",
     "httpMethod": "POST",
     "headers": {
         "Accept": "application/json,*/*",
@@ -88,11 +88,11 @@
     "stageVariables": null,
     "requestContext": {
         "resourceId": "12vv0b",
-        "resourcePath": "/hello",
+        "resourcePath": "/dispatch",
         "httpMethod": "POST",
         "extendedRequestId": "KaohsGY3CGYFpMw=",
         "requestTime": "03/Apr/2020:15:21:21 +0000",
-        "path": "/Prod/hello",
+        "path": "/Prod/dispatch",
         "accountId": "618464369307",
         "protocol": "HTTP/1.1",
         "stage": "Prod",

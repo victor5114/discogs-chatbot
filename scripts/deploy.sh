@@ -7,6 +7,6 @@ sam build && sam package --template-file $TEMPLATE_PATH \
     --output-template-file $PACKAGE_PATH
 
 sam deploy --template-file $PACKAGE_PATH \
-    --stack-name "discogs-chatbot" \
+    --stack-name "discogs-bot" \
     --capabilities CAPABILITY_NAMED_IAM \
     --parameter-overrides $(jq -r 'to_entries[] | "\(.key)=\(.value)"' .env/prod.json)

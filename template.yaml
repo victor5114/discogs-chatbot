@@ -1,9 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  discogs-wantlist
-
-  Sample SAM Template for discogs-wantlist
+  SAM template for Discogs Bot project
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -28,10 +26,10 @@ Parameters:
     Description: Debug mode
     Default: false
 Resources:
-  HelloWorldFunction:
+  DispatcherFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: hello_world/
+      CodeUri: lambdas/discogs-bot-dispatcher
       Handler: app.lambda_handler
       Runtime: python3.8
       Environment:
@@ -41,22 +39,22 @@ Resources:
           DISCOGS_SECRET_KEY: !Ref DiscogsSecretKey
           DEBUG: !Ref Debug
       Events:
-        HelloWorld:
+        Dispatcher:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /hello
+            Path: /dispatch
             Method: post
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
-    Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+  DispatcherdApi:
+    Description: "API Gateway endpoint URL for Prod stage for Dispatcher function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/dispatch/"
+  DispatcherFunction:
+    Description: "Dispatcher Lambda Function ARN"
+    Value: !GetAtt DispatcherFunction.Arn
+  DispatcherFunctionIamRole:
+    Description: "Implicit IAM Role created for Dispatcher function"
+    Value: !GetAtt DispatcherFunctionRole.Arn

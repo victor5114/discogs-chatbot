@@ -1,24 +1,42 @@
 import json
 import os
 import time
-import discogs_client
 import hmac
 import hashlib
 import ast
+import boto3
+from json.decoder import JSONDecodeError
+
+sns_client = boto3.client('sns')
 
 DEBUG = json.loads(os.environ.get('DEBUG', 'false').lower())
 
-def respond(err, res=None, err_code=400):
+# SNS TOPICS TO DISPATCH
+SNS_TOPIC_SEARCH_RELEASE = 'arn:aws:sns:eu-west-3:618464369307:search-release'
+
+
+
+def respond(err, res=None, err_code=400, content_type='application/json'):
+    """ Format browser readable http response. """
     return {
         'statusCode': err_code if err else '200',
         'body': json.dumps(err) if err else json.dumps(res),
         'headers': {
-            'Content-Type': 'application/json',
+            'Content-Type': content_type,
         },
     }
 
-def verify_slack_request(event):
+def _formparams_to_dict(req_body):
+    """ Converts the incoming form_params from Slack into a dictionary. """
+    retval = {}
+    for val in req_body.split('&'):
+        k, v = val.split('=')
+        retval[k] = v
+    return retval
 
+
+def verify_slack_request(event):
+    """ Verify if requests come from Slack system. """
     slack_signing_secret = os.environ["SLACK_SIGNING_SECRET"]
     request_body = event['body']
     timestamp = event['headers']['X-Slack-Request-Timestamp']
@@ -69,8 +87,44 @@ def lambda_handler(event, context):
                 "text": 'Signature verification has failed'
             }, None, 403)
 
-    response_msg = 'Hello Slack support team'
-    d = discogs_client.Client('ExampleApplication/0.1')
+    # Get useful payload from request body
+    req_body = event['body']
+        
+    # Validate Slack Event API Challenge
+    if event['headers']['Content-Type'] == 'application/json':
+        try:
+            _body = json.loads(req_body)
+            print(_body)
+            assert _body.get('type') == 'url_verification'
+            return respond(None, _body.get('challenge'), 'text/plain')
+        except JSONDecodeError:
+            return respond({
+                "response_type": 'in_channel',
+                "text": 'Challenge decoding has failed'
+            }, None, 403)
+
+    try:
+        params = _formparams_to_dict(req_body)
+        
+        # command_list is a sequence of strings in the slash command such as "slashcommand weather pune"
+        command_list = params['text'].split('+')
+
+        # publish SNS message to delegate the actual work to worker lambda function
+        message = {
+            "params": params,
+            "command_list": command_list
+        }
+
+        print(message)
+
+        sns_response = sns_client.publish(
+            TopicArn=SNS_TOPIC_SEARCH_RELEASE,
+            Message=json.dumps({'default': json.dumps(message)}),
+            MessageStructure='json'
+        )
+        response_msg = "Ok, working on your slash command ..."
+    except Exception as e:
+        response_msg = '[ERROR] {}'.format(str(e))
 
     return respond(None, {
             "response_type": 'in_channel',
