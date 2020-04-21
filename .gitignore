@@ -187,7 +187,6 @@ celerybeat-schedule.*
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -245,4 +244,3 @@ $RECYCLE.BIN/
 
 # Cause of SAM cli issue with handling env variables
 # See https://github.com/awslabs/aws-sam-cli/issues/1163
-env.json
