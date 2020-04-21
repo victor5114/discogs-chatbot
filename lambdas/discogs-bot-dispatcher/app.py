@@ -94,7 +94,6 @@ def lambda_handler(event, context):
     if event['headers']['Content-Type'] == 'application/json':
         try:
             _body = json.loads(req_body)
-            print(_body)
             assert _body.get('type') == 'url_verification'
             return respond(None, _body.get('challenge'), 'text/plain')
         except JSONDecodeError:
