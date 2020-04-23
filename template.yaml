@@ -25,6 +25,9 @@ Parameters:
     Type: String
     Description: Debug mode
     Default: false
+  SNSTopicSearchReleaseARN:
+    Type: String
+    Description: SNS Topic that triggers search release 
 Resources:
   DispatcherFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -38,13 +41,48 @@ Resources:
           DISCOGS_CONSUMER_KEY: !Ref DiscogsConsumerKey
           DISCOGS_SECRET_KEY: !Ref DiscogsSecretKey
           DEBUG: !Ref Debug
+          SNS_TOPIC_SEARCH_RELEASE: !Ref SNSTopicSearchReleaseARN
       Events:
         Dispatcher:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /dispatch
             Method: post
-
+  SearchReleaseFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: lambdas/discogs-bot-search-release
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Environment:
+        Variables:
+          SLACK_SIGNING_SECRET: !Ref SlackSigningSecret
+          DISCOGS_CONSUMER_KEY: !Ref DiscogsConsumerKey
+          DISCOGS_SECRET_KEY: !Ref DiscogsSecretKey
+          DEBUG: !Ref Debug
+      Events:
+        SNSTopicSearchRelease:
+          Type: SNS # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            FilterPolicy: null
+            Region: eu-west-3
+            SqsSubscription: false
+            Topic: !Ref SNSTopicSearchReleaseARN
+  SlackOAuthRedirectFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: lambdas/discogs-bot-search-release
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Environment:
+        Variables:
+          DEBUG: !Ref Debug
+      Events:
+        Dispatcher:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /oauth
+            Method: post
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM

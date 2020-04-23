@@ -1,0 +1,134 @@
+{
+    "resource": "/dispatch",
+    "path": "/dispatch",
+    "httpMethod": "POST",
+    "headers": {
+        "Accept": "application/json,*/*",
+        "Accept-Encoding": "gzip,deflate",
+        "CloudFront-Forwarded-Proto": "https",
+        "CloudFront-Is-Desktop-Viewer": "true",
+        "CloudFront-Is-Mobile-Viewer": "false",
+        "CloudFront-Is-SmartTV-Viewer": "false",
+        "CloudFront-Is-Tablet-Viewer": "false",
+        "CloudFront-Viewer-Country": "US",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Host": "ens236op18.execute-api.eu-west-3.amazonaws.com",
+        "User-Agent": "Slackbot 1.0 (+https://api.slack.com/robots)",
+        "Via": "1.1 14d757a67b913f1bc93427e69819362d.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Id": "Hdcq_ja7YOn4EgGGSEj7b2835NZGYvI0LSCwfq3jLVVrJUrKURUPTA==",
+        "X-Amzn-Trace-Id": "Root=1-5e875471-002833cc3d5e8dc0e8be0ca0",
+        "X-Forwarded-For": "3.83.164.70, 70.132.33.80",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https",
+        "X-Slack-Request-Timestamp": "1585927280",
+        "X-Slack-Signature": "v0=381fea4ea73166b8ff9d16896803265dbf13034f9c0ac68c7bbb90066a8f4955"
+    },
+    "multiValueHeaders": {
+        "Accept": [
+            "application/json,*/*"
+        ],
+        "Accept-Encoding": [
+            "gzip,deflate"
+        ],
+        "CloudFront-Forwarded-Proto": [
+            "https"
+        ],
+        "CloudFront-Is-Desktop-Viewer": [
+            "true"
+        ],
+        "CloudFront-Is-Mobile-Viewer": [
+            "false"
+        ],
+        "CloudFront-Is-SmartTV-Viewer": [
+            "false"
+        ],
+        "CloudFront-Is-Tablet-Viewer": [
+            "false"
+        ],
+        "CloudFront-Viewer-Country": [
+            "US"
+        ],
+        "Content-Type": [
+            "application/x-www-form-urlencoded"
+        ],
+        "Host": [
+            "ens236op18.execute-api.eu-west-3.amazonaws.com"
+        ],
+        "User-Agent": [
+            "Slackbot 1.0 (+https://api.slack.com/robots)"
+        ],
+        "Via": [
+            "1.1 14d757a67b913f1bc93427e69819362d.cloudfront.net (CloudFront)"
+        ],
+        "X-Amz-Cf-Id": [
+            "Hdcq_ja7YOn4EgGGSEj7b2835NZGYvI0LSCwfq3jLVVrJUrKURUPTA=="
+        ],
+        "X-Amzn-Trace-Id": [
+            "Root=1-5e875471-002833cc3d5e8dc0e8be0ca0"
+        ],
+        "X-Forwarded-For": [
+            "3.83.164.70, 70.132.33.80"
+        ],
+        "X-Forwarded-Port": [
+            "443"
+        ],
+        "X-Forwarded-Proto": [
+            "https"
+        ],
+        "X-Slack-Request-Timestamp": [
+            "1585927280"
+        ],
+        "X-Slack-Signature": [
+            "v0=381fea4ea73166b8ff9d16896803265dbf13034f9c0ac68c7bbb90066a8f4955"
+        ]
+    },
+    "queryStringParameters": null,
+    "multiValueQueryStringParameters": null,
+    "pathParameters": null,
+    "stageVariables": null,
+    "requestContext": {
+        "resourceId": "12vv0b",
+        "resourcePath": "/dispatch",
+        "httpMethod": "POST",
+        "extendedRequestId": "KaohsGY3CGYFpMw=",
+        "requestTime": "03/Apr/2020:15:21:21 +0000",
+        "path": "/Prod/dispatch",
+        "accountId": "618464369307",
+        "protocol": "HTTP/1.1",
+        "stage": "Prod",
+        "domainPrefix": "ens236op18",
+        "requestTimeEpoch": 1585927281108,
+        "requestId": "cd051157-7086-4426-8d97-20d527e7e18a",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "sourceIp": "3.83.164.70",
+            "principalOrgId": null,
+            "accessKey": null,
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "userAgent": "Slackbot 1.0 (+https://api.slack.com/robots)",
+            "user": null
+        },
+        "domainName": "ens236op18.execute-api.eu-west-3.amazonaws.com",
+        "apiId": "ens236op18"
+    },
+    "body": {
+        "ok": true,
+        "access_token": "xoxp-XXXXXXXX-XXXXXXXX-XXXXX",
+        "scope": "identify,bot,commands,incoming-webhook,chat:write:bot",
+        "user_id": "XXXXXXXX",
+        "team_name": "Your Workspace Name",
+        "team_id": "XXXXXXXX",
+        "incoming_webhook": {
+            "channel": "#channel-it-will-post-to",
+            "channel_id": "C05002EAE",
+            "configuration_url": "https://workspacename.slack.com/services/BXXXXX",
+            "url": "https://hooks.slack.com/TXXXXX/BXXXXX/XXXXXXXXXX"
+        }
+    },
+    "isBase64Encoded": false
+}
