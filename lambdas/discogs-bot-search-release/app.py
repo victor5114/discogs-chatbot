@@ -47,13 +47,11 @@ def lambda_handler(event, context):
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
     message = json.loads(event['Records'][0]['Sns']['Message'])
-    print(message)
-    param_map = message['param_map']
+    param_map = message['params']
     response_url = param_map['response_url']
 
     command_list = message['command_list']
     main_command = command_list[0].lower()
-    
     return respond(None, {
             "response_type": 'in_channel',
             "text": 'hello world - search release',
