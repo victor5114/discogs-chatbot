@@ -114,7 +114,7 @@ def lambda_handler(event, context):
             "command_list": command_list
         }
 
-        print(message)
+        # print(message)
 
         sns_response = sns_client.publish(
             TopicArn=SNS_TOPIC_SEARCH_RELEASE,

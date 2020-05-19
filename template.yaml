@@ -32,6 +32,7 @@ Resources:
   DispatcherFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
+      Role: arn:aws:iam::618464369307:role/lambda/dispatcher
       CodeUri: lambdas/discogs-bot-dispatcher
       Handler: app.lambda_handler
       Runtime: python3.8
@@ -51,6 +52,7 @@ Resources:
   SearchReleaseFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
+      Role: arn:aws:iam::618464369307:role/lambda/search-release
       CodeUri: lambdas/discogs-bot-search-release
       Handler: app.lambda_handler
       Runtime: python3.8
@@ -93,6 +95,3 @@ Outputs:
   DispatcherFunction:
     Description: "Dispatcher Lambda Function ARN"
     Value: !GetAtt DispatcherFunction.Arn
-  DispatcherFunctionIamRole:
-    Description: "Implicit IAM Role created for Dispatcher function"
-    Value: !GetAtt DispatcherFunctionRole.Arn

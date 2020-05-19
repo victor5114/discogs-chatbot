@@ -10,10 +10,6 @@ sns_client = boto3.client('sns')
 
 DEBUG = json.loads(os.environ.get('DEBUG', 'false').lower())
 
-# SNS TOPICS TO DISPATCH
-SNS_TOPIC_SEARCH_RELEASE = 'arn:aws:sns:eu-west-3:618464369307:search-release'
-
-
 def respond(err, res=None, err_code=400, content_type='application/json'):
     """ Format browser readable http response. """
     return {
@@ -46,7 +42,6 @@ def lambda_handler(event, context):
 
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
-    print(event)
     return respond(None, {
             "response_type": 'in_channel',
             "text": 'hello world - oauth',
