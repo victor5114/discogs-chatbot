@@ -1,10 +1,10 @@
 resource "aws_dynamodb_table" "user" {
-  name         = "discogs-user"
-  hash_key     = "ID"
+  name         = "slack-user"
+  hash_key     = "SlackID"
   billing_mode = "PAY_PER_REQUEST"
 
   attribute {
-    name = "ID"
+    name = "SlackID"
     type = "S"
   }
 
