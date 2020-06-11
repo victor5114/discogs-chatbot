@@ -1,6 +1,7 @@
 {
     "terminal.integrated.env.osx": {
-        "AWS_PROFILE": "victor5114-automation"
+        "AWS_PROFILE": "victor5114-automation",
+        "GOOGLE_APPLICATION_CREDENTIALS": "/Users/pongnianvictor/Work/victor5114/automation/discogs-bot/dialogflow/service_account/discogsbot.json"
     },
     "python.venvFolders": [
         "~/miniconda/envs/"
